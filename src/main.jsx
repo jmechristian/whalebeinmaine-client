@@ -13,7 +13,7 @@ const colors = {
 };
 
 const fonts = {
-  brand: 'swear-display, serif',
+  brand: 'skolar-latin, serif;',
 };
 
 const theme = extendTheme({ colors, fonts });
