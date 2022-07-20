@@ -13,7 +13,7 @@ function App() {
   return (
     <Box
       bgColor={'brand.800'}
-      py={{ base: '14', lg: '16' }}
+      py={{ base: '12', lg: '16' }}
       height={{ lg: '100%' }}
     >
       <Flex width={'100%'} height='100%' alignItems={'center'}>
@@ -29,7 +29,8 @@ function App() {
               color={'white'}
               fontFamily='brand'
               fontWeight={'extrabold'}
-              fontSize={{ base: '62px' }}
+              fontSize={{ base: '64px', lg: '78px' }}
+              mt={{ lg: '4' }}
               lineHeight={'1'}
             >
               Whale Be In{' '}
@@ -47,30 +48,71 @@ function App() {
           </GridItem>
           <GridItem rowSpan={{ base: 1, lg: 2 }}>
             <Box
-              bgColor='blackAlpha.500'
+              bgColor='gray.400'
               height={{ base: '500px', lg: '80vh' }}
+              position='relative'
             >
-              <Text color={'white'}>Map</Text>
+              <Box
+                bgColor={'brand.900'}
+                width='fit-content'
+                position={'absolute'}
+                top={{ base: '10px' }}
+                left={{ base: '10px' }}
+              >
+                <Text color='white' fontWeight={'bold'} px='3' py='1'>
+                  LIVE &bull;
+                </Text>
+              </Box>
             </Box>
           </GridItem>
-          <GridItem>
-            <Box bgColor='blackAlpha.900'>
-              <Grid gridAutoColumns={'auto'} gap='4'>
-                <GridItem color={'white'} width='100%' colSpan={2}>
-                  Post
+          <GridItem alignSelf='end'>
+            <Box>
+              <Grid gridAutoColumns={'1fr 1fr'} gap='4'>
+                <GridItem
+                  color={'white'}
+                  width='100%'
+                  colSpan={2}
+                  textAlign='center'
+                  mb={{ base: '4' }}
+                >
+                  <Text
+                    fontFamily={'brand'}
+                    fontWeight='bold'
+                    fontSize={{ base: '30px' }}
+                    borderTop='1px'
+                    borderBottom={'1px'}
+                    py='2'
+                  >
+                    Latest{' '}
+                    <span style={{ fontStyle: 'italic', color: '#D90D32' }}>
+                      Posts
+                    </span>
+                  </Text>
                 </GridItem>
                 <GridItem
                   colSpan={{ base: 2, md: 1 }}
                   width={{ base: '100%' }}
-                  height='300px'
-                  backgroundColor={'white'}
+                  height={{ base: '300px', lg: '175px' }}
+                  backgroundColor={'gray.400'}
                 ></GridItem>
                 <GridItem
                   colSpan={{ base: 2, md: 1 }}
                   width={{ base: '100%' }}
-                  height='300px'
-                  backgroundColor={'white'}
+                  height={{ base: '300px', lg: '175px' }}
+                  backgroundColor={'gray.400'}
                 ></GridItem>
+                <GridItem colSpan={{ base: 2 }}>
+                  <Box width={'100%'} textAlign='center' mt='2'>
+                    <Text
+                      color='brand.700'
+                      fontWeight={'bold'}
+                      textTransform='uppercase'
+                      letterSpacing='widest'
+                    >
+                      See All Posts &rarr;
+                    </Text>
+                  </Box>
+                </GridItem>
               </Grid>
             </Box>
           </GridItem>
