@@ -20,7 +20,7 @@ function App() {
         <Grid
           gridAutoRows={'max-content'}
           gridTemplateColumns={{ lg: '1fr 1fr' }}
-          gap={{ base: '12' }}
+          gap={{ base: '10', md: '12', lg: '16', xl: '20' }}
           width={'80%'}
           mx='auto'
         >
@@ -29,7 +29,12 @@ function App() {
               color={'white'}
               fontFamily='brand'
               fontWeight={'extrabold'}
-              fontSize={{ base: '64px', lg: '78px' }}
+              fontSize={{
+                base: '64px',
+                lg: '82px',
+                xl: '110px',
+                '2xl': '200px',
+              }}
               mt={{ lg: '4' }}
               lineHeight={'1'}
             >
@@ -40,7 +45,13 @@ function App() {
             </Text>
             <Text
               color={'brand.700'}
-              fontSize={{ base: '16px' }}
+              fontSize={{
+                base: '16px',
+                md: '20px',
+                lg: '20px',
+                xl: '26px',
+                '2xl': '48px',
+              }}
               mt={{ base: '2' }}
             >
               (Not my best pun, but you get it.)
@@ -59,7 +70,13 @@ function App() {
                 top={{ base: '10px' }}
                 left={{ base: '10px' }}
               >
-                <Text color='white' fontWeight={'bold'} px='3' py='1'>
+                <Text
+                  color='white'
+                  fontWeight={'bold'}
+                  px='3'
+                  py='1'
+                  fontSize={{ xl: '22px' }}
+                >
                   LIVE &bull;
                 </Text>
               </Box>
@@ -73,12 +90,12 @@ function App() {
                   width='100%'
                   colSpan={2}
                   textAlign='center'
-                  mb={{ base: '4' }}
+                  mb={{ base: '4', '2xl': '8' }}
                 >
                   <Text
                     fontFamily={'brand'}
                     fontWeight='bold'
-                    fontSize={{ base: '30px' }}
+                    fontSize={{ base: '30px', md: '32px', '2xl': '66px' }}
                     borderTop='1px'
                     borderBottom={'1px'}
                     py='2'
@@ -92,22 +109,37 @@ function App() {
                 <GridItem
                   colSpan={{ base: 2, md: 1 }}
                   width={{ base: '100%' }}
-                  height={{ base: '300px', lg: '175px' }}
+                  height={{
+                    base: '300px',
+                    lg: '175px',
+                    xl: '250px',
+                    '2xl': '475px',
+                  }}
                   backgroundColor={'gray.400'}
                 ></GridItem>
                 <GridItem
                   colSpan={{ base: 2, md: 1 }}
                   width={{ base: '100%' }}
-                  height={{ base: '300px', lg: '175px' }}
+                  height={{
+                    base: '300px',
+                    lg: '175px',
+                    xl: '250px',
+                    '2xl': '475px',
+                  }}
                   backgroundColor={'gray.400'}
                 ></GridItem>
                 <GridItem colSpan={{ base: 2 }}>
-                  <Box width={'100%'} textAlign='center' mt='2'>
+                  <Box
+                    width={'100%'}
+                    textAlign='center'
+                    mt={{ base: '2', '2xl': '6' }}
+                  >
                     <Text
                       color='brand.700'
                       fontWeight={'bold'}
                       textTransform='uppercase'
                       letterSpacing='widest'
+                      fontSize={{ '2xl': '32px' }}
                     >
                       See All Posts &rarr;
                     </Text>
