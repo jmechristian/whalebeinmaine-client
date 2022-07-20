@@ -19,8 +19,8 @@ function App() {
       <Flex width={'100%'} height='100%' alignItems={'center'}>
         <Grid
           gridAutoRows={'max-content'}
-          gridTemplateColumns={{ lg: '1fr 1fr' }}
-          gap={{ base: '10', md: '12', lg: '16', xl: '20' }}
+          gridTemplateColumns={{ lg: '7fr 5fr' }}
+          gap={{ base: '10', md: '12' }}
           width={'80%'}
           mx='auto'
         >
@@ -31,11 +31,9 @@ function App() {
               fontWeight={'extrabold'}
               fontSize={{
                 base: '64px',
-                lg: '82px',
+                lg: '90px',
                 xl: '110px',
-                '2xl': '200px',
               }}
-              mt={{ lg: '4' }}
               lineHeight={'1'}
             >
               Whale Be In{' '}
@@ -50,7 +48,6 @@ function App() {
                 md: '20px',
                 lg: '20px',
                 xl: '26px',
-                '2xl': '48px',
               }}
               mt={{ base: '2' }}
             >
@@ -75,7 +72,7 @@ function App() {
                   fontWeight={'bold'}
                   px='3'
                   py='1'
-                  fontSize={{ xl: '22px' }}
+                  fontSize={{ xl: '18px' }}
                 >
                   LIVE &bull;
                 </Text>
@@ -90,12 +87,12 @@ function App() {
                   width='100%'
                   colSpan={2}
                   textAlign='center'
-                  mb={{ base: '4', '2xl': '8' }}
+                  mb={{ base: '4' }}
                 >
                   <Text
                     fontFamily={'brand'}
                     fontWeight='bold'
-                    fontSize={{ base: '30px', md: '32px', '2xl': '66px' }}
+                    fontSize={{ base: '30px', md: '32px' }}
                     borderTop='1px'
                     borderBottom={'1px'}
                     py='2'
@@ -113,7 +110,7 @@ function App() {
                     base: '300px',
                     lg: '175px',
                     xl: '250px',
-                    '2xl': '475px',
+                    '2xl': '290px',
                   }}
                   backgroundColor={'gray.400'}
                 ></GridItem>
@@ -124,7 +121,7 @@ function App() {
                     base: '300px',
                     lg: '175px',
                     xl: '250px',
-                    '2xl': '475px',
+                    '2xl': '290px',
                   }}
                   backgroundColor={'gray.400'}
                 ></GridItem>
@@ -132,14 +129,14 @@ function App() {
                   <Box
                     width={'100%'}
                     textAlign='center'
-                    mt={{ base: '2', '2xl': '6' }}
+                    mt={{ base: '2', '2xl': '3' }}
                   >
                     <Text
                       color='brand.700'
                       fontWeight={'bold'}
                       textTransform='uppercase'
                       letterSpacing='widest'
-                      fontSize={{ '2xl': '32px' }}
+                      fontSize={{ '2xl': '18px' }}
                     >
                       See All Posts &rarr;
                     </Text>
