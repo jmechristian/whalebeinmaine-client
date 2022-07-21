@@ -22,7 +22,7 @@ function App() {
           gridTemplateColumns={{ lg: '7fr 5fr' }}
           gap={{ base: '10', md: '12' }}
           width={'80%'}
-          maxWidth='1700px'
+          maxWidth='1080px'
           mx='auto'
         >
           <GridItem textAlign={'center'}>
