@@ -88,7 +88,7 @@ function App() {
                   width='100%'
                   colSpan={2}
                   textAlign='center'
-                  mb={{ base: '4' }}
+                  mb={{ base: '2' }}
                 >
                   <Text
                     fontFamily={'brand'}
@@ -111,7 +111,6 @@ function App() {
                     base: '300px',
                     lg: '175px',
                     xl: '250px',
-                    '2xl': '290px',
                   }}
                   backgroundColor={'gray.400'}
                 ></GridItem>
@@ -122,16 +121,11 @@ function App() {
                     base: '300px',
                     lg: '175px',
                     xl: '250px',
-                    '2xl': '290px',
                   }}
                   backgroundColor={'gray.400'}
                 ></GridItem>
                 <GridItem colSpan={{ base: 2 }}>
-                  <Box
-                    width={'100%'}
-                    textAlign='center'
-                    mt={{ base: '2', '2xl': '3' }}
-                  >
+                  <Box width={'100%'} textAlign='center' mt={{ base: '1' }}>
                     <Text
                       color='brand.700'
                       fontWeight={'bold'}
