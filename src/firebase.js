@@ -11,8 +11,8 @@ const firebaseConfig = {
   projectId: 'maine-fe60f',
   storageBucket: 'maine-fe60f.appspot.com',
   messagingSenderId: '597881893189',
-  appId: '1:597881893189:web:e4325dc6f52f3943190e2c',
-  measurementId: 'G-2L2XLQKB92',
+  appId: '1:597881893189:web:a2c34f041ad2baa6190e2c',
+  measurementId: 'G-HZT1LTC7R8',
 };
 
 // Initialize Firebase
@@ -20,4 +20,4 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
 export const database = getDatabase(app);
-export const getStorage = getStorage(app);
+export const storage = getStorage(app);

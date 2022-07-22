@@ -1,15 +1,35 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Box, Flex, Text, Grid, GridItem } from '@chakra-ui/react';
+import ClientMap from './components/ClientMap';
+import 'mapbox-gl/dist/mapbox-gl.css';
+import { database } from './firebase';
 import {
-  Box,
-  Flex,
-  Text,
-  Grid,
-  GridItem,
-  VStack,
-  AspectRatio,
-} from '@chakra-ui/react';
+  ref as dataRef,
+  onValue,
+  orderByChild,
+  orderByKey,
+  orderByValue,
+  query,
+} from 'firebase/database';
 
 function App() {
+  const [lastSession, setLastSession] = useState([]);
+
+  useEffect(() => {
+    getLastLocation();
+  }, []);
+
+  const getLastLocation = () => {
+    const locationRef = query(
+      dataRef(database, 'sessions'),
+      orderByKey('date')
+    );
+    onValue(locationRef, (snapshot) => {
+      const data = Object.values(snapshot.val());
+      setLastSession(data[data.length - 1]);
+    });
+  };
+
   return (
     <Box
       bgColor={'brand.800'}
@@ -58,9 +78,11 @@ function App() {
           <GridItem rowSpan={{ base: 1, lg: 2 }}>
             <Box
               bgColor='gray.400'
-              height={{ base: '500px', lg: '80vh' }}
+              height={{ base: '500px', lg: '84vh' }}
               position='relative'
+              boxShadow={'dark-lg'}
             >
+              <ClientMap location={lastSession} />
               <Box
                 bgColor={'brand.900'}
                 width='fit-content'
