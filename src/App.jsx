@@ -7,30 +7,36 @@ import {
   GridItem,
   Center,
   Spinner,
+  Image,
 } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setLastLocation, setLastSession } from './data/pinSlice';
+import { setLastSession } from './data/pinSlice';
+import { setMarkers } from './data/markerSlice';
 import ClientMap from './components/ClientMap';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { database } from './firebase';
-import { ref as dataRef, onValue, child, get } from 'firebase/database';
+import { ref as dataRef, query, child, get, equalTo } from 'firebase/database';
 
 function App() {
   // const [lastSession, setLastSession] = useState([]);
   const [loading, setIsLoading] = useState(false);
+  const [imageLoading, setImageLoading] = useState(false);
+  const { markers } = useSelector((state) => state.markers);
   const dispatch = useDispatch();
 
   useEffect(() => {
     getInitData();
+    getMarkers();
+    setInterval(getLastData, 60000);
   }, []);
 
-  const getLastLocation = () => {
-    const dbRef = dataRef(database, 'sessions');
-    onValue(dbRef, (snapshot) => {
+  const getLastData = async () => {
+    const dbRef = dataRef(database);
+    const loc = await get(child(dbRef, 'sessions')).then((snapshot) => {
       const data = Object.values(snapshot.val());
-      console.log(data[data.length - 1]);
       return data;
     });
+    dispatch(setLastSession(loc));
   };
 
   const getInitData = async () => {
@@ -40,8 +46,21 @@ function App() {
       const data = Object.values(snapshot.val());
       return data;
     });
+    console.log(loc);
     dispatch(setLastSession(loc));
     setIsLoading(false);
+  };
+
+  const getMarkers = async () => {
+    setImageLoading(true);
+    const dbRef = dataRef(database);
+    const markers = await get(child(dbRef, 'markers')).then((snapshot) => {
+      const data = Object.values(snapshot.val());
+      return data.map((a) => a.urls);
+    });
+    console.log(markers);
+    dispatch(setMarkers(markers.flat()));
+    setImageLoading(false);
   };
 
   return (
@@ -54,9 +73,9 @@ function App() {
         <Grid
           gridAutoRows={'max-content'}
           gridTemplateColumns={{ lg: '7fr 5fr' }}
-          gap={{ base: '10', md: '12' }}
-          width={'80%'}
-          maxWidth='1160px'
+          gap={{ base: '10', md: '16' }}
+          width={'90%'}
+          maxWidth='1200px'
           mx='auto'
         >
           <GridItem textAlign={'center'}>
@@ -92,7 +111,7 @@ function App() {
           <GridItem rowSpan={{ base: 1, lg: 2 }}>
             <Box
               bgColor='gray.400'
-              height={{ base: '500px', lg: '84vh' }}
+              height={{ base: '500px', lg: '82vh' }}
               position='relative'
               boxShadow={'dark-lg'}
             >
@@ -163,7 +182,26 @@ function App() {
                     xl: '250px',
                   }}
                   backgroundColor={'gray.400'}
-                ></GridItem>
+                >
+                  {loading ? (
+                    <Center height={'100%'}>
+                      <Spinner
+                        thickness='4px'
+                        speed='0.65s'
+                        emptyColor='gray.200'
+                        color='brand.900'
+                        size='xl'
+                      />
+                    </Center>
+                  ) : (
+                    <Image
+                      objectFit={'cover'}
+                      src={markers ? markers[0] : ''}
+                      width='100%'
+                      height={'100%'}
+                    />
+                  )}
+                </GridItem>
                 <GridItem
                   colSpan={{ base: 2, md: 1 }}
                   width={{ base: '100%' }}
@@ -173,11 +211,30 @@ function App() {
                     xl: '250px',
                   }}
                   backgroundColor={'gray.400'}
-                ></GridItem>
+                >
+                  {loading ? (
+                    <Center height={'100%'}>
+                      <Spinner
+                        thickness='4px'
+                        speed='0.65s'
+                        emptyColor='gray.200'
+                        color='brand.900'
+                        size='xl'
+                      />
+                    </Center>
+                  ) : (
+                    <Image
+                      objectFit={'cover'}
+                      src={markers ? markers[1] : ''}
+                      width='100%'
+                      height={'100%'}
+                    />
+                  )}
+                </GridItem>
                 <GridItem colSpan={{ base: 2 }}>
                   <Box width={'100%'} textAlign='center' mt={{ base: '1' }}>
                     <Text
-                      color='brand.700'
+                      color='white'
                       fontWeight={'bold'}
                       textTransform='uppercase'
                       letterSpacing='widest'

@@ -14,14 +14,14 @@ const ClientMap = () => {
   useEffect(() => {
     if (lastSession) {
       const pinIndex = lastSession.length - 1;
-      console.log(lastSession[pinIndex]);
+      // console.log(lastSession[pinIndex]);
       setLastCoords(lastSession[pinIndex]);
       dispatch(setLastLocation(lastSession[pinIndex]));
       if (lastLocation) {
         setLastCoords(
           lastLocation.isUserLocation[lastLocation.isUserLocation.length - 1]
         );
-        console.log('last location' + ' ' + lastCoords);
+        // console.log('last location' + ' ' + lastCoords);
       }
     }
   }, [lastSession, lastLocation, lastCoords]);
@@ -33,7 +33,7 @@ const ClientMap = () => {
           initialViewState={{
             longitude: lastCoords[0],
             latitude: lastCoords[1],
-            zoom: 13,
+            zoom: 11,
           }}
           {...viewState}
           onMove={(event) => setViewState(event.viewState)}
@@ -56,7 +56,7 @@ const ClientMap = () => {
             thickness='4px'
             speed='0.65s'
             emptyColor='gray.200'
-            color='blue.500'
+            color='brand.900'
             size='xl'
           />
         </Center>
