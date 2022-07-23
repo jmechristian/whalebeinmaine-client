@@ -1,61 +1,67 @@
-import { Box } from '@chakra-ui/react';
+import { Box, Center, Spinner } from '@chakra-ui/react';
 import React, { useState, useRef, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setLastLocation } from '../data/pinSlice';
 import Map, { FullscreenControl, Marker } from 'react-map-gl';
-import car from '/images/Car.svg';
 
-const ClientMap = ({ location }) => {
+const ClientMap = () => {
   const [viewState, setViewState] = useState();
-  const [lastLocation, setLastLocation] = useState(null);
+  const [lastCoords, setLastCoords] = useState(null);
+  const { lastSession, lastLocation } = useSelector((state) => state.pins);
   const mapRef = useRef();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(location ? location.isUserLocation : 'Loading');
-    setLastLocation(location ? location.isUserLocation : []);
-    console.log(
-      lastLocation ? lastLocation[lastLocation.length - 1][0] : 'none'
-    );
-    if (lastLocation) {
-      setViewState({
-        longitude: lastLocation[lastLocation.length - 1][0],
-        latitude: lastLocation[lastLocation.length - 1][1],
-        zoom: 13,
-      });
+    if (lastSession) {
+      const pinIndex = lastSession.length - 1;
+      console.log(lastSession[pinIndex]);
+      setLastCoords(lastSession[pinIndex]);
+      dispatch(setLastLocation(lastSession[pinIndex]));
+      if (lastLocation) {
+        setLastCoords(
+          lastLocation.isUserLocation[lastLocation.isUserLocation.length - 1]
+        );
+        console.log('last location' + ' ' + lastCoords);
+      }
     }
-  }, [location]);
+  }, [lastSession, lastLocation, lastCoords]);
 
   return (
-    <Map
-      initialViewState={
-        lastLocation
-          ? {
-              longitude: lastLocation[lastLocation.length - 1][0],
-              latitude: lastLocation[lastLocation.length - 1][1],
-              zoom: 13,
-            }
-          : {
-              longitude: -77.438267,
-              latitude: 39.0431092,
-              zoom: 13,
-            }
-      }
-      {...viewState}
-      onMove={(event) => setViewState(event.viewState)}
-      mapStyle='mapbox://styles/jmechristian/ck1ogvt4m1ses1brt5xfloncr'
-      mapboxAccessToken='pk.eyJ1Ijoiam1lY2hyaXN0aWFuIiwiYSI6ImNsNW9udXBqNzBodDMzam92ZjR1cDNuM3oifQ.1XHdUAzgu6fisMcaHyPTnA'
-      ref={mapRef}
-    >
-      <FullscreenControl />
-      {lastLocation && (
-        <Marker
-          latitude={lastLocation[lastLocation.length - 1][1]}
-          longitude={lastLocation[lastLocation.length - 1][0]}
+    <>
+      {lastCoords ? (
+        <Map
+          initialViewState={{
+            longitude: lastCoords[0],
+            latitude: lastCoords[1],
+            zoom: 13,
+          }}
+          {...viewState}
+          onMove={(event) => setViewState(event.viewState)}
+          mapStyle='mapbox://styles/jmechristian/ck1ogvt4m1ses1brt5xfloncr'
+          mapboxAccessToken='pk.eyJ1Ijoiam1lY2hyaXN0aWFuIiwiYSI6ImNsNW9udXBqNzBodDMzam92ZjR1cDNuM3oifQ.1XHdUAzgu6fisMcaHyPTnA'
+          ref={mapRef}
         >
-          <Box width='30px' height={'30px'}>
-            <img src='/images/car.svg' />
-          </Box>
-        </Marker>
+          <FullscreenControl />
+          {lastCoords && (
+            <Marker latitude={lastCoords[1]} longitude={lastCoords[0]}>
+              <Box width='30px' height={'30px'}>
+                <img src='https://firebasestorage.googleapis.com/v0/b/maine-fe60f.appspot.com/o/Car.svg?alt=media&token=cc33097c-2fb7-424f-ad5a-25acecb7d459' />
+              </Box>
+            </Marker>
+          )}
+        </Map>
+      ) : (
+        <Center height={'100%'}>
+          <Spinner
+            thickness='4px'
+            speed='0.65s'
+            emptyColor='gray.200'
+            color='blue.500'
+            size='xl'
+          />
+        </Center>
       )}
-    </Map>
+    </>
   );
 };
 

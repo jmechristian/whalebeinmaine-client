@@ -1,33 +1,47 @@
 import { useState, useEffect } from 'react';
-import { Box, Flex, Text, Grid, GridItem } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Text,
+  Grid,
+  GridItem,
+  Center,
+  Spinner,
+} from '@chakra-ui/react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setLastLocation, setLastSession } from './data/pinSlice';
 import ClientMap from './components/ClientMap';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { database } from './firebase';
-import {
-  ref as dataRef,
-  onValue,
-  orderByChild,
-  orderByKey,
-  orderByValue,
-  query,
-} from 'firebase/database';
+import { ref as dataRef, onValue, child, get } from 'firebase/database';
 
 function App() {
-  const [lastSession, setLastSession] = useState([]);
+  // const [lastSession, setLastSession] = useState([]);
+  const [loading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getLastLocation();
+    getInitData();
   }, []);
 
   const getLastLocation = () => {
-    const locationRef = query(
-      dataRef(database, 'sessions'),
-      orderByKey('date')
-    );
-    onValue(locationRef, (snapshot) => {
+    const dbRef = dataRef(database, 'sessions');
+    onValue(dbRef, (snapshot) => {
       const data = Object.values(snapshot.val());
-      setLastSession(data[data.length - 1]);
+      console.log(data[data.length - 1]);
+      return data;
     });
+  };
+
+  const getInitData = async () => {
+    setIsLoading(true);
+    const dbRef = dataRef(database);
+    const loc = await get(child(dbRef, 'sessions')).then((snapshot) => {
+      const data = Object.values(snapshot.val());
+      return data;
+    });
+    dispatch(setLastSession(loc));
+    setIsLoading(false);
   };
 
   return (
@@ -42,7 +56,7 @@ function App() {
           gridTemplateColumns={{ lg: '7fr 5fr' }}
           gap={{ base: '10', md: '12' }}
           width={'80%'}
-          maxWidth='1080px'
+          maxWidth='1160px'
           mx='auto'
         >
           <GridItem textAlign={'center'}>
@@ -82,7 +96,21 @@ function App() {
               position='relative'
               boxShadow={'dark-lg'}
             >
-              <ClientMap location={lastSession} />
+              {loading ? (
+                <Center height={'100%'}>
+                  <Spinner
+                    thickness='4px'
+                    speed='0.65s'
+                    emptyColor='gray.200'
+                    color='brand.900'
+                    size='xl'
+                  />
+                </Center>
+              ) : (
+                //
+                <ClientMap />
+              )}
+
               <Box
                 bgColor={'brand.900'}
                 width='fit-content'

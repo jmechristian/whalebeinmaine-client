@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
 import App from './App';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
+import store from './data/store';
 import './globals.css';
 
 const colors = {
@@ -19,7 +21,9 @@ const fonts = {
 const theme = extendTheme({ colors, fonts });
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <ChakraProvider theme={theme}>
-    <App />
-  </ChakraProvider>
+  <Provider store={store}>
+    <ChakraProvider theme={theme}>
+      <App />
+    </ChakraProvider>
+  </Provider>
 );
